@@ -131,3 +131,5 @@ dmypy.json
 #file
 /adaptor.mars.internal-1637968981.9728487-3588-3-18bf1d3d-e9af-476b-9e32-7627a9f6c46f.grib
 weatherDataset.zip
+weatherTogether.csv
+gsoy-latest.tar.gz
