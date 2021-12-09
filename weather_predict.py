@@ -1,0 +1,75 @@
+from pyspark.sql import SparkSession, functions, types
+import sys
+from pprint import pprint
+import pandas as pd
+import numpy as np
+import glob
+
+spark = SparkSession.builder.appName('test').getOrCreate()
+spark.sparkContext.setLogLevel('WARN')
+
+assert sys.version_info >= (3, 5) # make sure we have Python 3.5+
+assert spark.version >= '2.3' # make sure we have Spark 2.3+
+
+
+def main(in_directory):
+    att = spark.read.option("header", "true").csv(in_directory)
+    df = att.select(
+        att['STATION'],
+        att['NAME'].alias("STATION_NAME"),
+        att['LATITUDE'],
+        att['LONGITUDE'],
+        att['ELEVATION'],
+        att['DATE'],
+        att['CLDD'],
+        att['DP01'],
+        att['DSND'],
+        att['DSNW'],
+        att['DT00'],
+        att['DT32'],
+        att['DX70'],
+        att['DX90'],
+        att['DYFG'],
+        att['DYTS'],
+        att['EMNT'],
+        att['EMSD'],
+        att['EMSN'],
+        att['EMXP'],
+        att['EMXT'],
+        att['EVAP'],
+        att['HTDD'],
+        att['HN01'],
+        att['HN02'],
+        att['HN03'],
+        att['HN04'],
+        att['HX01'],
+        att['HX02'],
+        att['HX03'],
+        att['HX04'],
+        att['LN01'],
+        att['LN02'],
+        att['LN03'],
+        att['LX01'],
+        att['LX02'],
+        att['LX03'],
+        att['LX04'],
+        att['MN01'],
+        att['MN02'],
+        att['MN03'],
+        att['MN04'],
+        att['MX01'],
+        att['MX02'],
+        att['MX03'],
+        att['MX04'],
+        att['PRCP'],
+        att['SNOW'],
+        att['TAVG'],
+        att['TMAX'],
+        att['TMIN'],
+    )
+    df.show()
+    # att.show()
+
+if __name__ == '__main__':
+    in_directory = sys.argv[1]
+    main(in_directory)
