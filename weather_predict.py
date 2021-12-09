@@ -67,8 +67,10 @@ def main(in_directory):
         att['TMAX'],
         att['TMIN'],
     )
-    df.show()
-    # att.show()
+    #TODO: Select spefic long and lat
+    
+
+    df.show(); return
 
 if __name__ == '__main__':
     in_directory = sys.argv[1]
