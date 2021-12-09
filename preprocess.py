@@ -8,7 +8,10 @@ zf = zipfile.ZipFile(filename)
 
 dfs = [pd.read_csv(zf.open(f)) for f in zf.namelist()[1:]]
 df = pd.concat(dfs,ignore_index=True)
-# print(df)
+print(df)
 
-
+# df.to_csv('weatherTogether.csv')
 #takes 2m08
+
+
+print(df)
