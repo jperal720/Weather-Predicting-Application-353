@@ -1,0 +1,5 @@
+"STATION","DATE","LATITUDE","LONGITUDE","ELEVATION","NAME","DP01","DP01_ATTRIBUTES","DP10","DP10_ATTRIBUTES","DP1X","DP1X_ATTRIBUTES","DSNW","DSNW_ATTRIBUTES","EMSN","EMSN_ATTRIBUTES","EMXP","EMXP_ATTRIBUTES","PRCP","PRCP_ATTRIBUTES","SNOW","SNOW_ATTRIBUTES"
+"US1CASC0069","2020-01","37.3456","-121.8935","23.2","SAN JOSE 3.7 NW, CA US","6","5,N","2","5,N","0","5,N","","","","","16.5","5,,N,17,","26.4","5,,,N","",""
+"US1CASC0069","2020-02","37.3456","-121.8935","23.2","SAN JOSE 3.7 NW, CA US","0",",N","0",",N","0",",N","0",",N","0",",,N,29,+","0.0",",,N,29,+","0.0",",,,N","0",",,,N"
+"US1CASC0069","2020-03","37.3456","-121.8935","23.2","SAN JOSE 3.7 NW, CA US","13",",N","4",",N","0",",N","","","","","19.8",",,N,15,","55.9",",,,N","",""
+"US1CASC0069","2020-04","37.3456","-121.8935","23.2","SAN JOSE 3.7 NW, CA US","4",",N","3",",N","0",",N","0","4,N","0","4,,N,30,+","15.0",",,N,06,","34.1",",,,N","0","4,,,N"
