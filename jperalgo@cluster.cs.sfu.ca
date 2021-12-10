@@ -39,18 +39,35 @@ def main(in_directory):
         att['EVAP'],
         att['HTDD'],
         att['HN01'],
+        att['HN02'],
+        att['HN03'],
+        att['HN04'],
         att['HX01'],
+        att['HX02'],
+        att['HX03'],
+        att['HX04'],
         att['LN01'],
+        att['LN02'],
+        att['LN03'],
         att['LX01'],
+        att['LX02'],
+        att['LX03'],
+        att['LX04'],
         att['MN01'],
+        att['MN02'],
+        att['MN03'],
+        att['MN04'],
         att['MX01'],
+        att['MX02'],
+        att['MX03'],
+        att['MX04'],
         att['PRCP'],
         att['SNOW'],
         att['TAVG'],
         att['TMAX'],
         att['TMIN'],
     )
-    # df = df.cache()
+    df = df.cache()
 
     # #Setting Latitde
     df = df.filter(df.LATITUDE >= 48.9)
@@ -58,11 +75,8 @@ def main(in_directory):
     #
     # #Setting Longitude
     df = df.filter(df.LONGITUDE >= -123.3)
-    # df = df.filter(df.LONGITUDE <= -121.81)
-
-    #Dropping columns with null values
-    df = df.dropna()
-    df.show(2000)
+    df = df.filter(df.LONGITUDE <= -121.81)
+    df.show(20)
 
     # df.show(); return
 
