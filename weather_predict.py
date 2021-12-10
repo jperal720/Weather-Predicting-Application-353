@@ -18,7 +18,7 @@ weather_schema = types.StructType([
     types.StructField('LONGITUDE', types.DoubleType()),
     types.StructField('ELEVATION', types.DoubleType()),
     types.StructField('DATE', types.StringType()),
-    types.StructField('DP01', types.IntegerType(), True),
+    types.StructField('DP01', types.IntegerType()),
     types.StructField('DSND', types.IntegerType()),
     types.StructField('DSNW', types.IntegerType()),
     types.StructField('DT00', types.IntegerType()),
@@ -116,16 +116,23 @@ def main(in_directory):
         df_cache['TMIN_CONVERTED'].alias('TMIN'),
     )
     spark.catalog.clearCache()
+    # df_converted.show()
 
     # TODO: Drop rows with null values
 
+    df_converted = df_converted.cache()
     # #Setting Latitude
-    df = df.filter(df.LATITUDE >= 48.9)
-    df = df.filter(df.LATITUDE <= 49.43)
+    df_converted = df_converted.filter(df.LATITUDE >= 48.9)
+    df_converted = df_converted.filter(df.LATITUDE <= 49.43)
     #
     # #Setting Longitude
-    df = df.filter(df.LONGITUDE >= -123.3)
-    df = df.filter(df.LONGITUDE <= -121.81)
+    df_converted = df_converted.filter(df.LONGITUDE >= -123.3)
+    df_converted = df_converted.filter(df.LONGITUDE <= -121.81)
+
+    spark.catalog.clearCache()
+    df_converted.show()
+    # df_converted.write.save("/Users/jonathanperalgort/Documents/df_converted")
+
 
 def f_to_c(input):
     if(input is None):
