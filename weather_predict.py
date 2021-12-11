@@ -1,7 +1,7 @@
 from pyspark.sql import SparkSession, functions, types
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestRegressor
 from datetime import datetime
 import sys
 from pprint import pprint
@@ -101,12 +101,16 @@ def model_train_test(data_frame):
 
     #Creating a data split
     X_train, X_valid, y_train, y_valid = train_test_split(X, y)
-    
+
     fit_model(X_train, X_valid, y_train, y_valid)
 
 def fit_model (X_train, X_valid, y_train, y_valid):
-    rfc = RandomForestClassifier()
-    rfc.fit(X_train, y_train.values.ravel())
+    rfc = RandomForestRegressor()
+    rfc.fit(X_train, y_train)
+
+    #Printing scores
+    print("Train score:" , rfc.score(X_train, y_train))
+    print("Validation Score:", rfc.score(X_valid, y_valid))
 
 
 
