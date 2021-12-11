@@ -50,14 +50,20 @@ def main(in_directory):
     WHEATLAND = weatherData.filter(weatherData.STATION_NAME.startswith('WH')).filter(weatherData.DATE > '1953')
     CORVALLIS = weatherData.filter(weatherData.STATION_NAME.startswith('COR')).filter(weatherData.DATE > '1953')
 
-    # WHEATLAND = WHEATLAND.withColumn('DATE', udf_convertDate("DATE"))
-    # CORVALLIS = CORVALLIS.withColumn('DATE', udf_convertDate("DATE"))
-
+    #Converting from spark to pandas dataframe
     pd_WHEATLAND = WHEATLAND.toPandas()
-    model_train_test(pd_WHEATLAND)
+    pd_CORVALLIS = CORVALLIS.toPandas()
 
-    # WHEATLAND.show()
-    # CORVALLIS.show()
+    #Creating Prediction dataframes
+    pd_df_prediction_WHEATLAND = model_train_test(pd_WHEATLAND)
+    pd_df_prediction_CORVALLIS = model_train_test(pd_CORVALLIS)
+
+    #Appending prediction columns to dataframes
+    # pd_WHEATLAND['P_SNOW'] = pd_df_prediction_WHEATLAND['P_SNOW'].iloc[0:]
+    # pd_WHEATLAND['P_TAVG'] = pd_df_prediction_WHEATLAND['P_TAVG'].iloc[0:]
+    #
+    # print(pd_WHEATLAND)
+    # print(pd_CORVALLIS)
 
     # print(weatherData.dropDuplicates(['STATION_NAME']).select(functions.collect_list('STATION_NAME')).first()[0])
 
@@ -102,15 +108,27 @@ def model_train_test(data_frame):
     #Creating a data split
     X_train, X_valid, y_train, y_valid = train_test_split(X, y)
 
-    fit_model(X_train, X_valid, y_train, y_valid)
+    #Creating a y_prediction dataframe
+    df_prediction = fit_model(X_train, X_valid, y_train, y_valid)
+
+    return df_prediction
+
+
 
 def fit_model (X_train, X_valid, y_train, y_valid):
     rfc = RandomForestRegressor()
     rfc.fit(X_train, y_train)
 
+    #Making predictions
+    y_prediction = rfc.predict(X_valid)
+    df_prediction = pd.DataFrame(y_prediction)
+    df_prediction.columns = ['P_SNOW', 'P_TAVG']
+
     #Printing scores
     print("Train score:" , rfc.score(X_train, y_train))
     print("Validation Score:", rfc.score(X_valid, y_valid))
+
+    return df_prediction
 
 
 
