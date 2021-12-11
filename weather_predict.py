@@ -54,18 +54,36 @@ def main(in_directory):
     pd_WHEATLAND = WHEATLAND.toPandas()
     pd_CORVALLIS = CORVALLIS.toPandas()
 
-    #Creating Prediction dataframes
-    pd_df_prediction_WHEATLAND = model_train_test(pd_WHEATLAND)
-    pd_df_prediction_CORVALLIS = model_train_test(pd_CORVALLIS)
+    #Creating Prediction dataframes and returning unlabelled dataframe and its results
+    print("Creating model for WHEATLAND:\n")
+    pd_df_prediction_WHEATLAND, U_WHEATLAND, U_WHEATLAND_Y = model_train_test(pd_WHEATLAND)
+    print("Creating model for CORVALLIS:\n")
+    pd_df_prediction_CORVALLIS, U_CORVALLIS, U_CORVALLIS_Y = model_train_test(pd_CORVALLIS)
 
-    #Appending prediction columns to dataframes
-    # pd_WHEATLAND['P_SNOW'] = pd_df_prediction_WHEATLAND['P_SNOW'].iloc[0:]
-    # pd_WHEATLAND['P_TAVG'] = pd_df_prediction_WHEATLAND['P_TAVG'].iloc[0:]
-    #
-    # print(pd_WHEATLAND)
-    # print(pd_CORVALLIS)
+    #Resetting indeces of validation dataframes
+    U_WHEATLAND.reset_index(inplace=True, drop=True)
+    U_WHEATLAND_Y.reset_index(inplace=True, drop=True)
+    U_CORVALLIS.reset_index(inplace=True, drop=True)
+    U_CORVALLIS_Y.reset_index(inplace=True, drop=True)
 
-    # print(weatherData.dropDuplicates(['STATION_NAME']).select(functions.collect_list('STATION_NAME')).first()[0])
+    #Appending actual values and predicted values to the unlabelled dataframe
+    print("\nWHEATLAND Prediction Results (DATAFRAME):\n")
+    SAMPLE_WHEATLAND = U_WHEATLAND
+    SAMPLE_WHEATLAND['SNOW'] = U_WHEATLAND_Y['SNOW']
+    SAMPLE_WHEATLAND['TAVG'] = U_WHEATLAND_Y['TAVG']
+    SAMPLE_WHEATLAND['P_SNOW'] = pd_df_prediction_WHEATLAND['P_SNOW'].iloc[0:]
+    SAMPLE_WHEATLAND['P_TAVG'] = pd_df_prediction_WHEATLAND['P_TAVG'].iloc[0:]
+
+    print(SAMPLE_WHEATLAND)
+
+    print("\nCORVALLIS Prediction Results (DATAFRAME):\n")
+    SAMPLE_CORVALLIS = U_CORVALLIS
+    SAMPLE_CORVALLIS['SNOW'] = U_CORVALLIS_Y['SNOW']
+    SAMPLE_CORVALLIS['TAVG'] = U_CORVALLIS_Y['TAVG']
+    SAMPLE_CORVALLIS['P_SNOW'] = pd_df_prediction_CORVALLIS['P_SNOW'].iloc[0:]
+    SAMPLE_CORVALLIS['P_TAVG'] = pd_df_prediction_CORVALLIS['P_TAVG'].iloc[0:]
+
+    print(SAMPLE_CORVALLIS)
 
 
 def model_train_test(data_frame):
@@ -111,8 +129,7 @@ def model_train_test(data_frame):
     #Creating a y_prediction dataframe
     df_prediction = fit_model(X_train, X_valid, y_train, y_valid)
 
-    return df_prediction
-
+    return df_prediction, X_valid, y_valid
 
 
 def fit_model (X_train, X_valid, y_train, y_valid):
@@ -121,6 +138,8 @@ def fit_model (X_train, X_valid, y_train, y_valid):
 
     #Making predictions
     y_prediction = rfc.predict(X_valid)
+
+    #Turning predictions into dataframe
     df_prediction = pd.DataFrame(y_prediction)
     df_prediction.columns = ['P_SNOW', 'P_TAVG']
 
@@ -129,7 +148,6 @@ def fit_model (X_train, X_valid, y_train, y_valid):
     print("Validation Score:", rfc.score(X_valid, y_valid))
 
     return df_prediction
-
 
 
 def convertDate(input):
