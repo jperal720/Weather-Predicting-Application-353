@@ -14,4 +14,4 @@ https://www.ncei.noaa.gov/data/global-summary-of-the-month/archive/
   
 6. In your terminal, input **"spark-submit weather_predict.py updatedWeather2.csv"**.
   
-7. You will be displayed with a dataframe that has the the prediction made by the model -Snow precipitations, as P_SNOW, and Monthly average temperature, as TAVG.
+7. You will be displayed with two dataframes: One includes data from a weather station in Wheatland, and the other from Corvallis. The last two columns will be the predictions made by the model -Snow precipitations, as P_SNOW, and Monthly average temperature, as P_TAVG. The differences between SNOW/TAVG (the actual values) and P_SNOW and P_TAVG can be easily observed.
