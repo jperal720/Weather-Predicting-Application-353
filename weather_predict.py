@@ -149,16 +149,6 @@ def fit_model (X_train, X_valid, y_train, y_valid):
 
     return df_prediction
 
-
-def convertDate(input):
-    if (input is None):
-        return None
-    else:
-        return input[0:4]
-
-
-udf_convertDate = functions.udf(convertDate, returnType=types.StringType())
-
 if __name__ == '__main__':
     in_directory = sys.argv[1]
     main(in_directory)
