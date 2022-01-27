@@ -10,7 +10,7 @@ https://www.ncei.noaa.gov/data/global-summary-of-the-month/archive/
 
 4. In your terminal, input **"spark-submit preprocess.py <gsom-latest directory>"** to run the preprocessing file that manipulates the raw data into usable data.
   
-5. Once the preprocess.py file is done running, a folder called "updatedWeather2.csv" will be created: It contains the data our model will use.
+5. Once the preprocess.py file is done running, a folder called "updatedWeather2.csv" will be created - it contains the data our model will use.
   
 6. In your terminal, input **"spark-submit weather_predict.py updatedWeather2.csv"**.
   
